@@ -1,0 +1,49 @@
+# /.github/workflows/test.yaml
+# Test everything with the library
+
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  imports:
+    name: Import Variations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Use Node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Test various imports with the library
+        run: |
+          cd test/import-tests
+          bash run-all-tests
+  stores:
+    name: External Stores
+    runs-on: ubuntu-latest
+    services:
+      rate-limit-redis:
+        image: redis
+        ports:
+          - 6379:6379
+      rate-limit-mongo:
+        image: mongo
+        ports:
+          - 27017:27017
+      rate-limit-memcached:
+        image: memcached
+        ports:
+          - 11211:11211
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Use Node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Test various external stores with the library
+        run: |
+          cd test/store-tests
+          bash run-all-tests

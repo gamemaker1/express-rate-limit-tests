@@ -1,0 +1,17 @@
+#!/bin/bash
+# Tests all external stores with the `express-rate-limit` package.
+
+if [[ -z "$CI" ]]; then
+	docker stop rate-limit-memcached rate-limit-mongo rate-limit-redis
+	docker rm rate-limit-memcached rate-limit-mongo rate-limit-redis
+
+	rm -rf /tmp/database
+
+	docker run --name rate-limit-memcached -p 11211:11211 -d memcached
+	docker run --name rate-limit-mongo -p 27017:27017 -v /tmp/database:/data/db -d mongo
+	docker run --name rate-limit-redis -p 6379:6379 -d redis
+fi
+
+rm -rf node_modules
+npm install ../../assets/express-rate-limit.tgz
+npm test

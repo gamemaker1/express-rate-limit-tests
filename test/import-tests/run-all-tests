@@ -1,0 +1,12 @@
+#!/bin/bash
+# Tests all the variations (JS-TS and CJS-ESM) with the `express-rate-limit` package.
+
+for dir in `ls -d */`; do
+	cd $dir
+
+	rm -rf node_modules
+	npm i ../../../assets/express-rate-limit.tgz 
+	npm test
+
+	cd ..
+done
