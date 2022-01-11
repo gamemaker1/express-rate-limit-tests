@@ -1,6 +1,7 @@
 # <div align="center"> `express-rate-limit-tests` </div>
 
-This repository contains tests for the
-[`express-rate-limit` package](https://github.com/nfriedly/express-rate-limit).
-All releases of the package are tested with the test cases in the `test/` folder
-of this repository.
+> Moved!
+
+These tests are now in the 
+[`test/external`](https://github.com/nfriedly/express-rate-limit/tree/master/test/external)
+irectory and run on every commit to the repository!
